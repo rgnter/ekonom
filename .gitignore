@@ -1,0 +1,4 @@
+# JetBrains CLion
+*.iml
+.idea/
+cmake-build-debug/
