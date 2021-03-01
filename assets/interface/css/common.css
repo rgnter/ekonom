@@ -1,0 +1,82 @@
+/**
+* gotta do something about that font this sucks, there must be way to do it more cleanly, but im lazy
+*/
+
+@font-face {
+  font-family: 'WorkSans BoldItalic';
+  src: url('../fonts/worksans-bolditalic.ttf');
+}
+@font-face {
+  font-family: 'WorkSans Light';
+  src: url('../fonts/worksans-light.ttf');
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  max-width: 100%;
+  max-height: 100%;
+
+  background: url("../img/noise-background.png") #111111;
+  overflow: none;
+  font-family: 'WorkSans Light'
+}
+
+/**
+* APP title
+*/
+.app_title {
+  margin: 11% auto;
+  display: block;
+  text-align: center;
+
+  color: #bada55;
+  font-size: 52px;
+  font-style: italic;
+  font-weight: bold;
+  font-family: 'WorkSans BoldItalic'
+}
+.app_title.topbar {
+  font-size: 30px;
+  text-align: right;
+  margin: 0;
+  margin-right: 50px;
+}
+
+/**
+* Buttons
+*/
+.btn {
+  margin: 0 auto;
+  text-align: center;
+
+  padding: 20px;
+  color: white;
+  text-decoration: none;
+  background: #222;
+
+  transform: skewX(-10deg);
+  font-weight: thin;
+  font-family: 'WorkSans Light'
+}
+
+.btn-wrap {
+  text-align: center;
+}
+
+.btn-wrap .btn {
+  width: unset;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+.title-btn-wrap .btn:hover {
+  color: #bbb;
+}
+
+.anm {
+  transition: 300ms;
+}
+.hide {
+  display: none !important;
+}

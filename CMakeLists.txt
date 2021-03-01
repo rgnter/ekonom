@@ -1,10 +1,13 @@
-cmake_minimum_required(VERSION 3.19)
-project(ekonom)
+project(Ekonom C CXX)
+cmake_minimum_required(VERSION 3.3.2)
 
-set(CMAKE_CXX_STANDARD 20)
+include_directories(build/SDK/include)
 
+include(cmake/App.cmake)
 
-add_executable(ekonom main.cpp)
+set(SOURCES "src/EkonomApp.hpp"
+            "src/EkonomApp.cpp"
+            "src/main.cpp"
+            "src/sys/SalesReport.hpp")
 
-target_include_directories(${PROJECT_NAME} PUBLIC deps/submodules/spdlog/include)
-target_link_libraries(${PROJECT_NAME} deps/lib/spdlog/libspdlog.a)
+add_app("${SOURCES}")

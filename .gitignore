@@ -1,4 +1,8 @@
-# JetBrains CLion
-*.iml
-.idea/
+# Ignore build/bin directories
+[Bb]uild/
+build_*/
+.DS_Store
+
+# clion
+.iml
 cmake-build-debug/
