@@ -12,14 +12,13 @@
 }
 
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   max-width: 100%;
   max-height: 100%;
 
   background: url("../img/noise-background.png") #111111;
-  overflow: none;
-  font-family: 'WorkSans Light'
+  font-family: 'WorkSans Light';
 }
 
 /**
@@ -34,7 +33,8 @@ body {
   font-size: 52px;
   font-style: italic;
   font-weight: bold;
-  font-family: 'WorkSans BoldItalic'
+  font-family: 'WorkSans BoldItalic';
+  text-decoration: none;
 }
 .app_title.topbar {
   font-size: 30px;
@@ -56,7 +56,7 @@ body {
   background: #222;
 
   transform: skewX(-10deg);
-  font-weight: thin;
+  font-weight: 300;
   font-family: 'WorkSans Light'
 }
 
@@ -70,7 +70,7 @@ body {
   display: inline-block;
 }
 
-.title-btn-wrap .btn:hover {
+.btn:hover {
   color: #bbb;
 }
 

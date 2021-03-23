@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Ekonom</title>
+    <head>
+        <meta charset="utf-8">
+        <title>Ekonom - Sales Report</title>
 
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/common.css">
-      <link rel="stylesheet" href="css/sales_report.css">
-  </head>
-  <script>
-    function showContinue() {
-        document.getElementById("process_data").classList.remove("hide");
-    }
+        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" href="css/common.css">
+        <link rel="stylesheet" href="css/sales_report.css">
 
-    function hideContinue() {
-        document.getElementById("process_data").classList.add("hide");
-    }
+        <script>
+            function showContinue() {
+                document.getElementById("process_data").classList.remove("hide");
+            }
 
-    function unmarkAsDone(elementId) {
-        document.getElementById(elementId).classList.remove("done");
-    }
+            function hideContinue() {
+                document.getElementById("process_data").classList.add("hide");
+            }
 
-    function markAsDone(elementId) {
-        document.getElementById(elementId).classList.add("done");
-    }
-  </script>
-  <body>
-    <a class="app_title topbar">EKONOM</a>
-    <div class="btn-wrap title sales">
-        <a id="data_gp" class="btn anm" href="#data_gp">Vložiť dáta od Global Payments</a>
-        <a id="data_fs" class="btn anm" href="#data_fs">Vložiť dáta od Finančnej Správy</a>
-    </div>
-    <div class="btn-wrap">
-      <a id="process_data" class="btn anm continue hide">Pokračovať<a>
-    </div>
+            function unmarkAsDone(elementId) {
+                document.getElementById(elementId).classList.remove("done");
+            }
 
-  </body>
+            function markAsDone(elementId) {
+                document.getElementById(elementId).classList.add("done");
+            }
+        </script>
+    </head>
+    <body>
+        <a class="app_title topbar" href="app.html">EKONOM</a>
+
+        <div class="btn-wrap title sales">
+            <a id="data_gp" class="btn anm" command="upload_gp_data">Vložiť dáta od Global Payments</a>
+            <a id="data_fs" class="btn anm" command="upload_fs_data">Vložiť dáta od Finančnej Správy</a>
+        </div>
+
+        <div class="btn-wrap">
+            <a id="process_data" class="btn anm continue hide">Pokračovať</a>
+        </div>
+    </body>
 </html>

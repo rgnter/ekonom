@@ -1,8 +1,10 @@
-# Ignore build/bin directories
+# VisualStudio
+.vs/
+out/
 [Bb]uild/
-build_*/
-.DS_Store
+CMakeSettings.json
 
-# clion
-.iml
-cmake-build-debug/
+# CLion
+.idea/
+*.iml
+
