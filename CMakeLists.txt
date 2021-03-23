@@ -21,7 +21,8 @@ link_libraries(spdlog::spdlog)
 
 set(SOURCES "src/EkonomApp.hpp"
             "src/EkonomApp.cpp"
-            "src/main.cpp")
+            "src/main.cpp"
+            )
 
 
 add_app("${SOURCES}")

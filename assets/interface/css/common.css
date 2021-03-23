@@ -22,7 +22,27 @@ body {
 }
 
 /**
-* APP title
+* App exit
+*/
+.exit-wrap {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    padding: 20px;
+}
+.exit-wrap i {
+    color: rgba(236, 87, 108, 0.5);
+    font-size: 30px;
+
+    transition: 500ms;
+}
+
+.exit-wrap i:hover {
+    color: rgba(236, 87, 108, 1);
+}
+
+/**
+* App title
 */
 .app_title {
   margin: 11% auto;

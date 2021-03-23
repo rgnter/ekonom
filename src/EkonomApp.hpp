@@ -11,38 +11,33 @@ namespace ekonom {
     using namespace ultralight;
 
     class EkonomApp : public AppListener,
-                      public WindowListener,
-                      public LoadListener,
-                      public ViewListener {
+        public WindowListener,
+        public LoadListener,
+        public ViewListener {
+    public:
+        /**
+        * this unholy instance for c-callback function
+        * im really sorry for this. i truly am.
+        */
+        inline static ekonom::EkonomApp* _instance;
 
-    protected:
         RefPtr<App> application;
         RefPtr<Window> window;
         RefPtr<Overlay> overlay;
 
-
     public:
         EkonomApp();
 
-        ~EkonomApp() override;
-
     public:
         void Run();
+        void ShowInspector();
 
     public:
-        void OnClose(ultralight::Window *window) override;
+        void OnClose(ultralight::Window* window) override;
+        void OnResize(ultralight::Window* window, uint32_t width_px, uint32_t height_px) override;
+        void OnChangeURL(ultralight::View* caller, const String& url) override;
+        void OnChangeTitle(ultralight::View* caller, const String& title) override;
+        void OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame, const String& url) override;
 
-        void OnResize(ultralight::Window *window, uint32_t width_px, uint32_t height_px) override;
-
-        void OnResize(uint32_t width, uint32_t height);
-
-        void OnChangeURL(ultralight::View *caller, const String &url) override;
-
-        void OnChangeTitle(ultralight::View *caller, const String &title) override;
-
-        void OnDOMReady(ultralight::View *caller, uint64_t frame_id, bool is_main_frame, const String &url) override;
-
-        void ShowInspector();
     };
-
 }
