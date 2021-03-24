@@ -6,16 +6,70 @@
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/common.css">
 </head>
-<body>
-    <div class="exit-wrap">
-        <a href="#exit_app">
-            <i class="fa fa-sign-out" aria-hidden="true" onclick="quit()"></i>
-        </a>
+<script>
+    let mousedown = false;
+    let mouseX;
+    let mouseY;
+
+    let debug = false;
+    let settings = false;
+
+
+    function toggleSettings() {
+        settings = !settings;
+        var cogIcon = document.getElementById("cog-icon");
+        var menu    = document.getElementById("settings-menu");
+
+        if(settings) {
+            menu.classList.remove("hidden");
+            cogIcon.classList.add("selected");
+        } else {
+            menu.classList.add("hidden");
+            cogIcon.classList.remove("selected");
+        }
+    }
+    function documentReady() {
+
+        document.addEventListener('mousedown', function (evt) {
+            evt.preventDefault();
+            mouseDown = true;
+            mouseX = evt.clientX;
+            mouseY = evt.clientY;
+        }, false);
+    }  
+</script>
+<body onload="documentReady()">
+    <div class="top-wrap">
+        <p class="icon-wrap">
+            <i id="cog-icon" class="fa fa-cog" aria-hidden="true" onclick="toggleSettings()"></i>
+        </p>
+        <p class="icon-wrap">
+            <i id="quit-icon" class="fa fa-sign-out" aria-hidden="true" onclick="_quit()"></i>
+        </p>
     </div>
-    <p class="app_title">EKONOM</p>
+
+    <p class="app_title" drag="true">EKONOM</p>
     <div class="btn-wrap">
         <a class="btn anm" href="app-sales_report.html">Vytvoriť mesačný REPORT</a>
         <a class="btn anm" href="#" onclick="">Asi niečo s fakturou/</a>
+    </div>
+
+    <div id="settings-menu" class="settings-wrap hidden">
+        <p class="title">Settings</p>
+        <div class="categories">
+            <p class="category">
+                <i class="fa fa-sliders" aria-hidden="true"></i>
+                <span>Všeobecné</span>
+            </p>
+            <p class="category">
+                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                <span>Profit API</span>
+            </p>
+            <p class="category">
+                <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                <span>Faktura API</span>
+            </p>
+        </div>
     </div>
 
 </body>

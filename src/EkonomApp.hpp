@@ -5,6 +5,7 @@
 #include <spdlog/spdlog.h>
 #include <windows.h>
 
+#include "defines/defines.hpp"
 
 namespace ekonom {
 
@@ -25,6 +26,11 @@ namespace ekonom {
         RefPtr<Window> window;
         RefPtr<Overlay> overlay;
 
+    private:
+        bool ultralightDebug = false;
+        bool ekonomDebug = false;
+    
+
     public:
         EkonomApp();
 
@@ -32,12 +38,25 @@ namespace ekonom {
         void Run();
         void ShowInspector();
 
+        void showConsole();
+        void switchUltralightDebug();
+        void switchEkonomDebug();
+
     public:
         void OnClose(ultralight::Window* window) override;
         void OnResize(ultralight::Window* window, uint32_t width_px, uint32_t height_px) override;
         void OnChangeURL(ultralight::View* caller, const String& url) override;
         void OnChangeTitle(ultralight::View* caller, const String& title) override;
         void OnDOMReady(ultralight::View* caller, uint64_t frame_id, bool is_main_frame, const String& url) override;
+
+        void OnAddConsoleMessage(ultralight::View* caller,
+            MessageSource source,
+            MessageLevel level,
+            const String& message,
+            uint32_t line_number,
+            uint32_t column_number,
+            const String& source_id) override;
+        
 
     };
 }
