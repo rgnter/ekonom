@@ -1,9 +1,16 @@
+
+
+#ifdef WIN32 
+    #include <windows.h>
+#endif
+
 #include <AppCore/AppCore.h>
 #include <JavaScriptCore/JavaScript.h>
 #include <Ultralight/View.h>
 #include <Ultralight/Listener.h>
 #include <spdlog/spdlog.h>
-#include <windows.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <OpenXLSX.hpp>
 
 #include "defines/defines.hpp"
 

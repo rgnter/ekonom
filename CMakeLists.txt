@@ -1,6 +1,10 @@
 project(Ekonom C CXX)
 cmake_minimum_required(VERSION 3.3.2)
 
+set(EKONOM_VERMAJOR 1)
+set(EKONOM_VERMINOR 0)
+set(EKONOM_VERPATCH 0)
+
 include(cmake/App.cmake)
 include(cmake/conan.cmake)
 
@@ -16,7 +20,14 @@ conan_cmake_install(PATH_OR_REFERENCE .
                     REMOTE conan-center
                     SETTINGS ${settings})
 find_package(spdlog)
-link_libraries(spdlog::spdlog)
+
+if(WIN32)
+    include_directories(${PROJECT_SOURCE_DIR}/deps/x64-win/include)
+    link_directories(${PROJECT_SOURCE_DIR}/deps/x64-win/lib)
+endif()
+
+
+link_libraries(spdlog::spdlog "openxlsx-static")
 
 
 set(SOURCES "src/EkonomApp.hpp"
@@ -24,5 +35,7 @@ set(SOURCES "src/EkonomApp.hpp"
             "src/main.cpp"
             )
 
-
 add_app("${SOURCES}")
+
+
+

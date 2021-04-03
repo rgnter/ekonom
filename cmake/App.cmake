@@ -73,7 +73,7 @@ MACRO(ADD_APP source_list)
   if (MSVC)
     # Tell MSVC to use main instead of WinMain for Windows subsystem executables
     # /ENTRY:mainCRTStartup
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:WinMainCRTStartup")
+    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:WinMainCRTStartup /SUBSYSTEM:console")
   endif()
 
   # Copy all binaries to target directory

@@ -1,9 +1,7 @@
 ﻿#include "EkonomApp.hpp"
 
-#ifdef WIN32 
-#include <windows.h>
-
 bool _showConsole() {
+#ifdef WIN32 
     AllocConsole();
 
     freopen("conin$", "r", stdin);
@@ -12,16 +10,11 @@ bool _showConsole() {
 
     spdlog::info("Console attached");
     return true;
-}
 #else
-
-bool :showConsole() {
     spdlog::warn("Console not implemented for this OS");
     return false;
-}
-
 #endif
-
+}
 
 ekonom::EkonomApp::EkonomApp() {
 
@@ -46,10 +39,8 @@ void ekonom::EkonomApp::Run() {
 
     OnResize(this->window.get(), this->window->width(), this->window->height());
 
-    
     this->application->Run();
 }
-
 
 void ekonom::EkonomApp::showConsole()
 {
@@ -146,13 +137,9 @@ void ekonom::EkonomApp::OnDOMReady(ultralight::View *caller, uint64_t frame_id, 
     };
     bindJSFunction("_settings_debugUltralightSwitch", ctx, funcDebugUltralight);
     bindJSFunction("_settings_debugEkonomSwitch", ctx, funcDebugEkonom);
+    bindJSFunction("_settings_showDebugConsole", ctx, funcShowConsole);
 
     this->window->Show();
-}
-
-const char* levelName(ultralight::MessageLevel level) {
-
-    return "???";
 }
 
 const char* sourceName(ultralight::MessageSource level) {
