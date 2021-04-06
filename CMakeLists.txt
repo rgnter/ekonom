@@ -29,13 +29,13 @@ endif()
 
 link_libraries(spdlog::spdlog "openxlsx-static")
 
-
-set(SOURCES "src/EkonomApp.hpp"
-            "src/EkonomApp.cpp"
-            "src/main.cpp"
+set(WEB_SOURCE_ROOT "src/web")
+set(SOURCES "src/cxx/EkonomApp.hpp"
+            "src/cxx/EkonomApp.cpp"
+            "src/cxx/main.cpp"
             )
 
-add_app("${SOURCES}")
+add_app("${SOURCES}" "${WEB_SOURCE_ROOT}")
 
 
 

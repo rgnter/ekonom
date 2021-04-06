@@ -44,7 +44,7 @@ ExternalProject_Add(UltralightSDK
   INSTALL_COMMAND ""
 )
 
-MACRO(ADD_APP source_list)
+MACRO(ADD_APP source_list websource_root)
   set(APP_NAME ${CMAKE_PROJECT_NAME})
 
   include_directories("${ULTRALIGHT_INCLUDE_DIR}")
@@ -89,6 +89,10 @@ MACRO(ADD_APP source_list)
   # Copy assets to assets path
   add_custom_command(TARGET ${APP_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
+
+  # Copy web source to assets path
+  add_custom_command(TARGET ${APP_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/${websource_root}/web/" "${ASSETS_PATH}")
 
   if(${ENABLE_INSPECTOR})
     # Copy inspector to assets directory
