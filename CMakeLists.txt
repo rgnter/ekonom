@@ -21,12 +21,12 @@ conan_cmake_install(PATH_OR_REFERENCE .
                     SETTINGS ${settings})
 find_package(spdlog)
 
-add_library(openxlsx SHARED IMPORTED) # or STATIC instead of SHARED
+add_library(openxlsx STATIC IMPORTED)
 
 if(WIN32)    
    set_target_properties(openxlsx PROPERTIES
   	IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/deps/x64-win/lib/openxlsx-static.lib"
-  	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/include/libbar")
+  	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/deps/include/openxlsx")
 elseif(UNIX)
    set_target_properties(openxlsx PROPERTIES
         IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/deps/x64-lnx/lib/openxlsx-static.a"
