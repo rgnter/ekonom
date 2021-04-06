@@ -86,13 +86,14 @@ MACRO(ADD_APP source_list websource_root)
     set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/assets") 
   endif () 
 
+  # TODO: Fix UNIX err
   # Copy assets to assets path
-  add_custom_command(TARGET ${APP_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
+  # add_custom_command(TARGET ${APP_NAME} POST_BUILD
+  #  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
 
   # Copy web source to assets path
   add_custom_command(TARGET ${APP_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/${websource_root}/web/" "${ASSETS_PATH}")
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/${websource_root}/" "${ASSETS_PATH}/web")
 
   if(${ENABLE_INSPECTOR})
     # Copy inspector to assets directory

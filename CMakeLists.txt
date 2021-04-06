@@ -21,13 +21,19 @@ conan_cmake_install(PATH_OR_REFERENCE .
                     SETTINGS ${settings})
 find_package(spdlog)
 
-if(WIN32)
-    include_directories(${PROJECT_SOURCE_DIR}/deps/x64-win/include)
-    link_directories(${PROJECT_SOURCE_DIR}/deps/x64-win/lib)
+add_library(openxlsx SHARED IMPORTED) # or STATIC instead of SHARED
+
+if(WIN32)    
+   set_target_properties(openxlsx PROPERTIES
+  	IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/deps/x64-win/lib/openxlsx-static.lib"
+  	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/include/libbar")
+elseif(UNIX)
+   set_target_properties(openxlsx PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/deps/x64-lnx/lib/openxlsx-static.a"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/deps/include/openxlsx")
 endif()
 
-
-link_libraries(spdlog::spdlog "openxlsx-static")
+link_libraries(spdlog::spdlog openxlsx)
 
 set(WEB_SOURCE_ROOT "src/web")
 set(SOURCES "src/cxx/EkonomApp.hpp"

@@ -30,7 +30,7 @@ ekonom::EkonomApp::EkonomApp() {
 
 void ekonom::EkonomApp::Run() {
     _instance = this;
-    this->overlay->view()->LoadURL("file:///app.html");
+    this->overlay->view()->LoadURL("file:///web/app.html");
 
     this->application->set_listener(this);
     this->window->set_listener(this);
