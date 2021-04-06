@@ -1,7 +1,7 @@
 # Ekonom
 ## Developers
 ### Prerequisites
-This projects requires **conan** and **cmake**. Project developed in MSVC toolset version `14.28.29910` (for x64 Windows) and GNU GCC toolset version `placeholder` (for x64 linux).
+This projects requires **conan** and **cmake**. Project developed in MSVC toolset version `14.28.29910` (for x64 Windows) and GNU GCC toolset version `9.3.0` (for x64 linux).
 ### Structure
 Source is divided into two parts. CXX where cpp/hpp files are stored, and WEB where all html/css/js UI files are stored.
 
