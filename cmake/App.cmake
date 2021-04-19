@@ -88,8 +88,8 @@ MACRO(ADD_APP source_list websource_root)
 
   # TODO: Fix UNIX err
   # Copy assets to assets path
-  # add_custom_command(TARGET ${APP_NAME} POST_BUILD
-  #  COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
+  add_custom_command(TARGET ${APP_NAME} POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
 
   # Copy web source to assets path
   add_custom_command(TARGET ${APP_NAME} POST_BUILD

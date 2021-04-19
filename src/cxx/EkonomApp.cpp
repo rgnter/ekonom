@@ -23,7 +23,7 @@ ekonom::EkonomApp::EkonomApp() {
     });
 
     this->window = Window::Create(this->application->main_monitor(), 1024, 512,
-                                  false, kWindowFlags_Titled);
+                                  false, kWindowFlags_Borderless);
     this->window->MoveToCenter();
     this->overlay = Overlay::Create(*window, 1, 1, 0, 0);
 }

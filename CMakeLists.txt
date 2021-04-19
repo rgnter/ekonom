@@ -1,4 +1,4 @@
-project(Ekonom C CXX)
+project(ekonom C CXX)
 cmake_minimum_required(VERSION 3.3.2)
 
 set(EKONOM_VERMAJOR 1)
@@ -11,7 +11,7 @@ include(cmake/conan.cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 
-conan_cmake_configure(REQUIRES spdlog/1.8.2
+conan_cmake_configure(REQUIRES spdlog/1.8.2 libcurl/7.75.0
                       GENERATORS cmake_find_package)
 
 conan_cmake_autodetect(settings)
