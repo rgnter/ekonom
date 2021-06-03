@@ -1,5 +1,6 @@
 
 #include "cfg/config_provider.hpp"
+#include "EkonomVersion.hpp"
 #include "EkonomApp.hpp"
 
 #include <utility>
@@ -8,6 +9,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/daily_file_sink.h>
 #include <cxxopts.hpp>
+
 
 
 int main(int argc, char **argv) {
@@ -35,9 +37,10 @@ int main(int argc, char **argv) {
     const auto logger =
             std::make_shared<spdlog::logger>(spdlog::logger("", {logConsoleSink, logFileSink}));
     spdlog::set_level(spdlog::level::debug);
-    spdlog::info("Logging files saved to: {}", logPath.c_str());
-
     spdlog::set_default_logger(logger);
+    spdlog::info("Ekonom version {}.{}.{}", EKONOM_VERSION_MAJOR, EKONOM_VERSION_MINOR, EKONOM_VERSION_PATCH);
+    spdlog::info("Logging file path: {}", logPath.c_str());
+    spdlog::info("Config file path: {}", cfgPath.c_str());
 
     ekonom::config_provider configProvider(cfgPath);
 

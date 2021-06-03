@@ -83,12 +83,12 @@ MACRO(ADD_APP source_list websource_root)
   if (APPLE)
     set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/../Resources/assets") 
   else ()
-    set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/assets") 
+    set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/Assets")
   endif () 
 
   # Copy assets to assets path
-  add_custom_command(TARGET ${APP_NAME} POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
+  # add_custom_command(TARGET ${APP_NAME} POST_BUILD
+  # COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
 
   # Copy web to assets path
   add_custom_command(TARGET ${APP_NAME} POST_BUILD

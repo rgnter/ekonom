@@ -1,12 +1,9 @@
-project(ekonom C CXX)
 cmake_minimum_required(VERSION 3.3.2)
 
-set(EKONOM_VERMAJOR 1)
-set(EKONOM_VERMINOR 0)
-set(EKONOM_VERPATCH 0)
+project(ekonom VERSION 1.0.2)
+configure_file(src/EkonomVersion.hpp.in EkonomVersion.hpp)
 
 include(cmake/App.cmake)
-
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
@@ -65,6 +62,9 @@ set(SOURCES "src/cxx/EkonomApp.hpp"
             )
 
 add_app("${SOURCES}" "${WEB_SOURCE_ROOT}")
+target_include_directories(ekonom PUBLIC
+        "${PROJECT_BINARY_DIR}"
+        )
 
 
 

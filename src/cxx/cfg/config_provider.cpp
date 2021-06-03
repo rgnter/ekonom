@@ -14,26 +14,26 @@ ekonom::config_provider::config_provider(const std::string &configPath) :
         m_filePath(configPath) {
     spdlog::stopwatch sw;
     spdlog::info("Constructing config provider");
-    spdlog::debug("Config file path (relative to binary): {}", this->m_filePath.c_str());
 
     this->m_fileStream = std::make_shared<std::fstream>(this->m_filePath);
     if(this->m_fileStream->fail()) {
-        spdlog::debug("Creating new default configuration");
+        spdlog::debug("Creating new configuration");
         writeConfig();
     } else {
-        spdlog::debug("Reading existing configuration");
+        spdlog::debug("Loading existing configuration");
         readConfig();
     }
-
     spdlog::info("Constructed config provider in {:.3}s", sw);
 }
 
 void ekonom::config_provider::writeConfig() {
+    spdlog::debug("Writing configuration to: {}", this->m_filePath.c_str());
     // std::endl to flush buffer
     (*this->m_fileStream) << std::setw(4) << this->m_jsonData << std::endl;
 }
 
 void ekonom::config_provider::readConfig() {
+    spdlog::debug("Reading configuration from: {}", this->m_filePath.c_str());
     (*this->m_fileStream) >> this->m_jsonData;
 }
 
