@@ -53,6 +53,7 @@ endif()
 
 link_libraries(spdlog::spdlog openxlsx nlohmann_json::nlohmann_json cxxopts::cxxopts)
 
+
 set(WEB_SOURCE_ROOT "src/web")
 set(SOURCES "src/cxx/EkonomApp.hpp"
             "src/cxx/EkonomApp.cpp"
@@ -65,6 +66,8 @@ add_app("${SOURCES}" "${WEB_SOURCE_ROOT}")
 target_include_directories(ekonom PUBLIC
         "${PROJECT_BINARY_DIR}"
         )
+
+
 
 
 

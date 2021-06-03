@@ -7,13 +7,15 @@
 
 #include <fstream>
 #include <utility>
+#include <mutex>
 
 #include "nlohmann/json.hpp"
 
 namespace ekonom {
     class config_provider {
     private:
-        std::shared_ptr<std::fstream> m_fileStream;
+        std::mutex m_fileMutex;
+        std::shared_ptr<std::fstream> m_file;
         const std::string m_filePath;
 
     private:
@@ -26,15 +28,21 @@ namespace ekonom {
          */
         explicit config_provider(const std::string &configPath);
 
+        virtual ~config_provider();
+
     public:
+        /**
+         * Loads default config data to memory
+         */
+        void loadDefault();
         /**
          * Writes config data to filesystem
          */
-        void writeConfig();
+        bool writeConfig();
         /**
          * Reads config data from filesystem
          */
-        void readConfig();
+        bool readConfig();
 
     public:
         const std::string& getFilePath();

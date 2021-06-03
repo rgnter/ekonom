@@ -10,105 +10,107 @@ set(ULTRALIGHT_BINARY_DIR "${SDK_ROOT}/bin")
 set(ULTRALIGHT_INSPECTOR_DIR "${SDK_ROOT}/inspector")
 
 if (UNIX)
-  if (APPLE)
-    set(PORT UltralightMac)
-    set(PLATFORM "mac")
-    set(ULTRALIGHT_LIBRARY_DIR "${SDK_ROOT}/bin")
-  else ()
-    set(PORT UltralightLinux)
-    set(PLATFORM "linux")
-    set(ULTRALIGHT_LIBRARY_DIR "${SDK_ROOT}/bin")
-  endif ()
+    if (APPLE)
+        set(PORT UltralightMac)
+        set(PLATFORM "mac")
+        set(ULTRALIGHT_LIBRARY_DIR "${SDK_ROOT}/bin")
+    else ()
+        set(PORT UltralightLinux)
+        set(PLATFORM "linux")
+        set(ULTRALIGHT_LIBRARY_DIR "${SDK_ROOT}/bin")
+    endif ()
 elseif (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set(PORT UltralightWin)
     set(PLATFORM "win")
     set(ULTRALIGHT_LIBRARY_DIR "${SDK_ROOT}/lib")
 else ()
-  message(FATAL_ERROR "Unknown OS '${CMAKE_SYSTEM_NAME}'")
+    message(FATAL_ERROR "Unknown OS '${CMAKE_SYSTEM_NAME}'")
 endif ()
 
 if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(ARCHITECTURE "x64")
+    set(ARCHITECTURE "x64")
 else ()
-  set(ARCHITECTURE "x86")
+    set(ARCHITECTURE "x86")
 endif ()
 
 set(S3_DOMAIN ".sfo2.cdn.digitaloceanspaces.com")
 
 ExternalProject_Add(UltralightSDK
-  URL https://ultralight-sdk${S3_DOMAIN}/ultralight-sdk-latest-${PLATFORM}-${ARCHITECTURE}.7z
-  SOURCE_DIR "${SDK_ROOT}"
-  BUILD_IN_SOURCE 1
-  CONFIGURE_COMMAND ""
-  BUILD_COMMAND ""
-  INSTALL_COMMAND ""
-)
+        URL https://ultralight-sdk${S3_DOMAIN}/ultralight-sdk-latest-${PLATFORM}-${ARCHITECTURE}.7z
+        SOURCE_DIR "${SDK_ROOT}"
+        BUILD_IN_SOURCE 1
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ""
+        )
 
 MACRO(ADD_APP source_list websource_root)
-  set(APP_NAME ${CMAKE_PROJECT_NAME})
+    set(APP_NAME ${CMAKE_PROJECT_NAME})
 
-  include_directories("${ULTRALIGHT_INCLUDE_DIR}")
-  link_directories("${ULTRALIGHT_LIBRARY_DIR}")
-  link_libraries(UltralightCore AppCore Ultralight WebCore)
+    include_directories("${ULTRALIGHT_INCLUDE_DIR}")
+    link_directories("${ULTRALIGHT_LIBRARY_DIR}")
+    link_libraries(UltralightCore AppCore Ultralight WebCore)
 
-  if (PORT MATCHES "UltralightLinux")
-    SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
-    SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-    SET(CMAKE_INSTALL_RPATH "$\{ORIGIN\}")
-  endif ()
+    if (PORT MATCHES "UltralightLinux")
+        SET(CMAKE_SKIP_BUILD_RPATH FALSE)
+        SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+        SET(CMAKE_INSTALL_RPATH "$\{ORIGIN\}")
+    endif ()
 
-  if (PORT MATCHES "UltralightMac")
-    SET(CMAKE_SKIP_BUILD_RPATH  FALSE)
-    SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-    SET(CMAKE_INSTALL_RPATH "@executable_path/")
-  endif ()
+    if (PORT MATCHES "UltralightMac")
+        SET(CMAKE_SKIP_BUILD_RPATH FALSE)
+        SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+        SET(CMAKE_INSTALL_RPATH "@executable_path/")
+    endif ()
 
-  add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${source_list})
+    add_executable(${APP_NAME} WIN32 MACOSX_BUNDLE ${source_list})
 
-  if (APPLE)
-    # Enable High-DPI on macOS through our custom Info.plist template
-    set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Info.plist.in) 
-  endif()
+    if (APPLE)
+        # Enable High-DPI on macOS through our custom Info.plist template
+        set_target_properties(${APP_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Info.plist.in)
+    endif ()
 
-  if (MSVC)
-    # Tell MSVC to use main instead of WinMain for Windows subsystem executables
-    # /ENTRY:mainCRTStartup
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:console")
-  endif()
+    if (MSVC)
+        if (${CMAKE_BUILD_TYPE} MATCHES "Release")
+            set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:WINDOWS")
+        else ()
+            set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:console")
+        endif ()
+    endif ()
 
-  # Copy all binaries to target directory
-  add_custom_command(TARGET ${APP_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_BINARY_DIR}" $<TARGET_FILE_DIR:${APP_NAME}>)
-
-  if (APPLE)
-    set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/../Resources/assets") 
-  else ()
-    set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/Assets")
-  endif () 
-
-  # Copy assets to assets path
-  # add_custom_command(TARGET ${APP_NAME} POST_BUILD
-  # COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
-
-  # Copy web to assets path
-  add_custom_command(TARGET ${APP_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/${websource_root}/" "${ASSETS_PATH}/web")
-
-  if(${ENABLE_INSPECTOR})
-    # Copy inspector to assets directory
+    # Copy all binaries to target directory
     add_custom_command(TARGET ${APP_NAME} POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_INSPECTOR_DIR}" "${ASSETS_PATH}/inspector")
-  endif ()
+            COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_BINARY_DIR}" $<TARGET_FILE_DIR:${APP_NAME}>)
 
-  if (APPLE)
-    set(RESOURCES_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/../Resources/resources") 
-  else ()
-    set(RESOURCES_PATH "${ASSETS_PATH}/resources") 
-  endif () 
+    if (APPLE)
+        set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/../Resources/assets")
+    else ()
+        set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/Assets")
+    endif ()
 
-  # Copy resources to resources path
-  add_custom_command(TARGET ${APP_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_BINARY_DIR}/resources/" "${RESOURCES_PATH}")
+    # Copy assets to assets path
+    # add_custom_command(TARGET ${APP_NAME} POST_BUILD
+    # COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
 
-  add_dependencies(${APP_NAME} UltralightSDK)
+    # Copy web to assets path
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/${websource_root}/" "${ASSETS_PATH}/web")
+
+    if (${ENABLE_INSPECTOR})
+        # Copy inspector to assets directory
+        add_custom_command(TARGET ${APP_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_INSPECTOR_DIR}" "${ASSETS_PATH}/inspector")
+    endif ()
+
+    if (APPLE)
+        set(RESOURCES_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/../Resources/resources")
+    else ()
+        set(RESOURCES_PATH "${ASSETS_PATH}/resources")
+    endif ()
+
+    # Copy resources to resources path
+    add_custom_command(TARGET ${APP_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory "${ULTRALIGHT_BINARY_DIR}/resources/" "${RESOURCES_PATH}")
+
+    add_dependencies(${APP_NAME} UltralightSDK)
 ENDMACRO()

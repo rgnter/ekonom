@@ -29,15 +29,14 @@ int main(int argc, char **argv) {
 
     const auto logConsoleSink =
             std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-    logConsoleSink->set_level(spdlog::level::debug);
     const auto logFileSink =
             std::make_shared<spdlog::sinks::daily_file_sink_mt>(logPath, 0, 0);
-    logFileSink->set_level(spdlog::level::debug);
-
     const auto logger =
             std::make_shared<spdlog::logger>(spdlog::logger("", {logConsoleSink, logFileSink}));
     spdlog::set_level(spdlog::level::debug);
     spdlog::set_default_logger(logger);
+
+
     spdlog::info("Ekonom version {}.{}.{}", EKONOM_VERSION_MAJOR, EKONOM_VERSION_MINOR, EKONOM_VERSION_PATCH);
     spdlog::info("Logging file path: {}", logPath.c_str());
     spdlog::info("Config file path: {}", cfgPath.c_str());
