@@ -1,10 +1,13 @@
 # VisualStudio
 .vs/
 out/
-[Bb]uild/
 CMakeSettings.json
 
 # CLion
+cmake-build-debug/
+cmake-build-release/
 .idea/
 *.iml
 
+# General
+[Bb]uild/

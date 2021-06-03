@@ -1,18 +1,13 @@
-
-
-#ifdef WIN32 
-    #include <windows.h>
-#endif
+#include <utility>
+#include <cstdint>
 
 #include <AppCore/AppCore.h>
 #include <JavaScriptCore/JavaScript.h>
 #include <Ultralight/View.h>
 #include <Ultralight/Listener.h>
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <OpenXLSX.hpp>
 
-#include "defines/defines.hpp"
+#include <spdlog/spdlog.h>
+#include <OpenXLSX.hpp>
 
 namespace ekonom {
 
@@ -23,20 +18,13 @@ namespace ekonom {
         public LoadListener,
         public ViewListener {
     public:
-        /**
-        * this unholy instance for c-callback function
-        * im really sorry for this. i truly am.
-        */
         inline static ekonom::EkonomApp* _instance;
+
+        std::shared_ptr<spdlog::logger> logger;
 
         RefPtr<App> application;
         RefPtr<Window> window;
         RefPtr<Overlay> overlay;
-
-    private:
-        bool ultralightDebug = false;
-        bool ekonomDebug = false;
-    
 
     public:
         EkonomApp();
@@ -44,10 +32,6 @@ namespace ekonom {
     public:
         void Run();
         void ShowInspector();
-
-        void showConsole();
-        void switchUltralightDebug();
-        void switchEkonomDebug();
 
     public:
         void OnClose(ultralight::Window* window) override;
@@ -63,7 +47,5 @@ namespace ekonom {
             uint32_t line_number,
             uint32_t column_number,
             const String& source_id) override;
-        
-
     };
 }

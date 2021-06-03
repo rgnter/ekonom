@@ -73,7 +73,7 @@ MACRO(ADD_APP source_list websource_root)
   if (MSVC)
     # Tell MSVC to use main instead of WinMain for Windows subsystem executables
     # /ENTRY:mainCRTStartup
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:WinMainCRTStartup /SUBSYSTEM:console")
+    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/ENTRY:mainCRTStartup /SUBSYSTEM:console")
   endif()
 
   # Copy all binaries to target directory
@@ -86,12 +86,11 @@ MACRO(ADD_APP source_list websource_root)
     set(ASSETS_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/assets") 
   endif () 
 
-  # TODO: Fix UNIX err
   # Copy assets to assets path
   add_custom_command(TARGET ${APP_NAME} POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets/" "${ASSETS_PATH}")
 
-  # Copy web source to assets path
+  # Copy web to assets path
   add_custom_command(TARGET ${APP_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/${websource_root}/" "${ASSETS_PATH}/web")
 
@@ -104,7 +103,7 @@ MACRO(ADD_APP source_list websource_root)
   if (APPLE)
     set(RESOURCES_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/../Resources/resources") 
   else ()
-    set(RESOURCES_PATH "$<TARGET_FILE_DIR:${APP_NAME}>/resources") 
+    set(RESOURCES_PATH "${ASSETS_PATH}/resources") 
   endif () 
 
   # Copy resources to resources path
