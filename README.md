@@ -21,3 +21,5 @@ mkdir build && cd build
 cmake .. 
 make .
 ```
+## Credits
+Logo created by [@notfreeusername](https://github.com/notfreeusername)
